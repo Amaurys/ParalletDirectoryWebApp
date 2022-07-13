@@ -20,7 +20,8 @@ namespace ParalletDirectoryWebApp.Controllers
         // GET: FolderController
         public ActionResult Index()
         {
-            return View();
+            var model = _context.Folders.ToList();
+            return View(model);
         }
         //s
         // GET: FolderController/Details/5
