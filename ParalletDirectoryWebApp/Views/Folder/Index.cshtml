@@ -1,11 +1,18 @@
 ﻿@model IEnumerable<Folder>
-
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<h1>@Configuration.GetSection("Paths")["ServerPath"]</h1>
+<div class=""></div>
 <table>
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @*@Html.DisplayFor(modelItem => item.Name)*@
+                @if (item.Location == Configuration.GetSection("Paths")["ServerPath"])
+                {
+                    @item.Name
+                }
             </td>
         </tr>
     }

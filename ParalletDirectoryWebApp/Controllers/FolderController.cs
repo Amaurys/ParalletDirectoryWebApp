@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ParalletDirectoryWebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -39,21 +40,20 @@ namespace ParalletDirectoryWebApp.Controllers
         // POST: FolderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Folder model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _context.Add(model);
+            _context.SaveChanges();
+
+            return RedirectToAction("index");
         }
 
         // GET: FolderController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Folder model)
         {
+            _context.Update(model);
+            _context.SaveChanges();
+
             return View();
         }
 

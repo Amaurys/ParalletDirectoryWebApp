@@ -24,7 +24,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
                     </ul>
+                    <div class="container">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                                Folders
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li> <a class="nav-link text-dark" asp-area="" asp-controller="Folder" asp-action="Index">Ver Folders</a></li>
+                                <li> <a class="nav-link text-dark" asp-area="" asp-controller="Folder" asp-action="Create">Agregar Folder</a></li>
+                            </ul>
+                        </div>                       
+                    </div>
+
                 </div>
             </div>
         </nav>

@@ -12,6 +12,7 @@ namespace ParalletDirectoryWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        //private readonly ParallelContext _context;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,6 +21,7 @@ namespace ParalletDirectoryWebApp.Controllers
 
         public IActionResult Index()
         {
+            //var model = _context.Folders.ToList();
             return View();
         }
 
