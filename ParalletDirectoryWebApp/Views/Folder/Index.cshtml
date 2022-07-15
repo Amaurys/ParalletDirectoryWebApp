@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<Folder>
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-<h1>@Configuration.GetSection("Paths")["ServerPath"]</h1>
+
+<h1>Path:</h1>
+<h3>@Configuration.GetSection("Paths")["ServerPath"].Split("\\")[1]</h3>
 <div class=""></div>
 <table>
     @foreach (var item in Model)
@@ -12,6 +14,8 @@
                 @if (item.Location == Configuration.GetSection("Paths")["ServerPath"])
                 {
                     @item.Name
+                    <a class="fa-solid fa-pen-to-square" asp-action="Edit" asp-route-id="@item.Folderid">Edit</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Folderid">Delete</a>
                 }
             </td>
         </tr>

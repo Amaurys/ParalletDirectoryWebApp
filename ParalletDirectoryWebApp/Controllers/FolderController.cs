@@ -5,6 +5,7 @@ using ParalletDirectoryWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ParalletDirectoryWebApp.Controllers
@@ -34,6 +35,12 @@ namespace ParalletDirectoryWebApp.Controllers
         // GET: FolderController/Create
         public ActionResult Create()
         {
+            ViewBag.Folders = _context.Folders.ToList().OrderBy(x => x.Folderid)
+                .Select(x => new
+                {
+                    Folderid = x.Folderid,
+                    Location = x.Location + "/" + x.Name
+                });
             return View();
         }
 
@@ -49,27 +56,38 @@ namespace ParalletDirectoryWebApp.Controllers
         }
 
         // GET: FolderController/Edit/5
-        public ActionResult Edit(Folder model)
+        public ActionResult Edit(int id)
         {
-            _context.Update(model);
-            _context.SaveChanges();
+            var folders = _context.Folders.ToList();
 
-            return View();
+            ViewBag.Folders = folders.Select(a => new
+            {
+                Folderid = a.Folderid,
+                Location = a.Location
+            }).Where(b => b.Folderid == id).Union(
+                folders.OrderBy(x => x.Folderid)
+                .Select(x => new
+                {
+                    Folderid = x.Folderid,
+                    Location = x.Location + "/" + x.Name
+                }).Where(y => y.Folderid != id)
+                );
+
+            var model = _context.Folders.Find(id);
+            return View(model);
         }
 
         // POST: FolderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Folder model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+
+            _context.Update(model);
+            _context.SaveChanges();
+
+            return View();
         }
 
         // GET: FolderController/Delete/5
